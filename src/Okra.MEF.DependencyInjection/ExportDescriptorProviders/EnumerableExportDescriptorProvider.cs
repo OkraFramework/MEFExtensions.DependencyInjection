@@ -18,6 +18,9 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
             if (!contract.ContractType.IsConstructedGenericType || contract.ContractType.GetGenericTypeDefinition() != typeof(IEnumerable<>))
                 return NoExportDescriptors;
 
+            if (descriptorAccessor.ResolveDependencies("enumerable", contract, true).Count() > 0)
+                return NoExportDescriptors;
+
             var elementType = contract.ContractType.GenericTypeArguments[0];
             var elementContract = contract.ChangeType(elementType);
 
