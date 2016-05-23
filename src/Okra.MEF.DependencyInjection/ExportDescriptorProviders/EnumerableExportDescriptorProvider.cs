@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Okra.MEF.Util;
 
-namespace Okra.MEF.DependencyInjection
+namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
 {
     internal class EnumerableExportDescriptorProvider : ExportDescriptorProvider
     {

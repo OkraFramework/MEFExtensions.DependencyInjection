@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Okra.MEF.DependencyInjection
+namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
 {
     // Based upon https://mef.codeplex.com/SourceControl/latest#oob/demo/Microsoft.Composition.Demos.ExtendedPartTypes/Extension/InstanceExportDescriptorProvider.cs
     // TODO: A new export descriptior provider for each type - could I have a single instance that does a table lookup?
