@@ -67,5 +67,14 @@ namespace Okra.MEF.DependencyInjection {
                 return ResourceManager.GetString("NoConstructorMatch", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Cannot instantiate implementation type &apos;{0}&apos; for service type &apos;{1}&apos;..
+        /// </summary>
+        public static string TypeCannotBeActivated {
+            get {
+                return ResourceManager.GetString("TypeCannotBeActivated", resourceCulture);
+            }
+        }
     }
 }

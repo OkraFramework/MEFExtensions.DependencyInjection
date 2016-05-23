@@ -18,6 +18,15 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
 
         public TypeExportDescriptorProvider(ServiceDescriptor serviceDescriptor)
         {
+            TypeInfo implementationType = serviceDescriptor.ImplementationType.GetTypeInfo();
+
+            if (implementationType.IsAbstract ||
+                implementationType.IsInterface ||
+                implementationType.IsGenericTypeDefinition)
+            {
+                throw new ArgumentException(string.Format(Resources.TypeCannotBeActivated, serviceDescriptor.ImplementationType, serviceDescriptor.ServiceType));
+            }
+
             this._serviceDescriptor = serviceDescriptor;
         }
 
