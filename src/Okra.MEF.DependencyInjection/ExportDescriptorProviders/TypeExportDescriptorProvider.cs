@@ -52,7 +52,17 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
                      CompositeActivator activator = (c, o) =>
                          {
                              var parameters = parameterActivators.Select(pa => CompositionOperation.Run(c, pa)).ToArray();
-                             var result = constructor.Invoke(parameters);
+
+                             object result;
+
+                             try
+                             {
+                                 result = constructor.Invoke(parameters);
+                             }
+                             catch (TargetInvocationException e)
+                             {
+                                 throw e.InnerException;
+                             }
 
                              if (result is IDisposable)
                                  c.AddBoundInstance((IDisposable)result);
