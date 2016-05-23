@@ -88,7 +88,7 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
                     return Tuple.Create(constructor, constructorDependencies);
             }
 
-            throw new NotImplementedException();
+            throw new InvalidOperationException(string.Format(Resources.NoConstructorMatch, implementationContract.ContractType));
         }
 
         private static bool TryResolveConstructorDependencies(ConstructorInfo constructor, DependencyAccessor definitionAccessor, out IEnumerable<CompositionDependency> dependencies)
