@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Composition.Convention;
 using System.Composition.Hosting;
+using System.Composition.Hosting.Core;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -27,24 +28,26 @@ namespace Okra.MEF.DependencyInjection
 
         private static CompositionContext CreateContainer(IEnumerable<ServiceDescriptor> serviceDescriptors)
         {
-            var containerConfiguration = new ContainerConfiguration();
-
+            List<ExportDescriptorProvider> exportDescriptorProviders = new List<ExportDescriptorProvider>();
+            
             foreach (var descriptor in serviceDescriptors)
             {
                 if (descriptor.ImplementationInstance != null)
-                    containerConfiguration.WithProvider(new InstanceExportDescriptorProvider(descriptor));
+                    exportDescriptorProviders.Add(new InstanceExportDescriptorProvider(descriptor));
                 else if (descriptor.ImplementationFactory != null)
-                    containerConfiguration.WithProvider(new FactoryExportDescriptorProvider(descriptor));
+                    exportDescriptorProviders.Add(new FactoryExportDescriptorProvider(descriptor));
                 else if (descriptor.ImplementationType != null)
-                    containerConfiguration.WithProvider(new TypeExportDescriptorProvider(descriptor));
+                    exportDescriptorProviders.Add(new TypeExportDescriptorProvider(descriptor));
                 else
                     throw new NotImplementedException();
             }
 
+            var containerConfiguration = new ContainerConfiguration();
+
             containerConfiguration.WithPart<MefServiceProvider>();
             containerConfiguration.WithPart<MefServiceScopeFactory>();
 
-            containerConfiguration.WithProvider(new EnumerableExportDescriptorProvider());
+            containerConfiguration.WithProvider(new AggregateExportDescriptorProvider(exportDescriptorProviders));
 
             return containerConfiguration.CreateContainer();
         }

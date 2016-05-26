@@ -32,18 +32,12 @@ namespace Okra.MEF.DependencyInjection
 
         public object GetService(Type serviceType)
         {
-            // Try to compose the service using the default MEF container
+            object export;
 
-            var exports = _compositionContext.GetExports(serviceType).ToList();
-
-            if (exports.Count > 0)
-            {
-                return exports.Last();
-            }
+            if (_compositionContext.TryGetExport(serviceType, out export))
+                return export;
             else
-            {
                 return null;
-            }
         }
     }
 }
