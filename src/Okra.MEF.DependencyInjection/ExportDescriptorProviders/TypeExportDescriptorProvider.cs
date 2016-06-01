@@ -49,14 +49,15 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
         {
             ConstructorInfo constructor;
             IEnumerable<CompositionDependency> dependencies;
+            Exception exception;
 
-            if (!TryGetLongestComposableConstructor(implementationContract, definitionAccessor, out constructor, out dependencies))
+            if (!TryGetLongestComposableConstructor(implementationContract, definitionAccessor, out constructor, out dependencies, out exception))
             {
                 return new ExportDescriptorPromise(contract, typeof(TElement).Name, false, NoDependencies, ds =>
                     {
                         CompositeActivator activator = (c, o) =>
                         {
-                            throw new InvalidOperationException(string.Format(Resources.NoConstructorMatch, implementationContract.ContractType));
+                            throw exception;
                         };
 
                         return ExportDescriptor.Create(activator, NoMetadata);
@@ -97,30 +98,48 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
                  });
         }
 
-        private static bool TryGetLongestComposableConstructor(CompositionContract implementationContract, DependencyAccessor definitionAccessor, out ConstructorInfo constructor, out IEnumerable<CompositionDependency> dependencies)
+        private static bool TryGetLongestComposableConstructor(CompositionContract implementationContract, DependencyAccessor definitionAccessor, out ConstructorInfo constructor, out IEnumerable<CompositionDependency> dependencies, out Exception exception)
         {
             var availableConstructors = implementationContract.ContractType.GetTypeInfo().DeclaredConstructors
                                 .Where(c => c.IsPublic)
-                                .OrderByDescending(c => c.GetParameters().Length);
+                                .OrderByDescending(c => c.GetParameters().Length)
+                                .ToArray();
+
+            Type lastFailedParameterType = null;
 
             foreach (var availableConstructor in availableConstructors)
             {
                 IEnumerable<CompositionDependency> constructorDependencies;
 
-                if (TryResolveConstructorDependencies(availableConstructor, definitionAccessor, out constructorDependencies))
+                if (TryResolveConstructorDependencies(availableConstructor, definitionAccessor, out constructorDependencies, out lastFailedParameterType))
                 {
                     constructor = availableConstructor;
                     dependencies = constructorDependencies;
+                    exception = null;
                     return true;
                 }
             }
 
             constructor = null;
             dependencies = null;
+
+            switch (availableConstructors.Length)
+            {
+                case 0:
+                    exception = new InvalidOperationException(string.Format(Resources.NoConstructorMatch, implementationContract.ContractType));
+                    break;
+                case 1:
+                    exception = new InvalidOperationException(string.Format(Resources.CannotResolveService, lastFailedParameterType, implementationContract.ContractType));
+                    break;
+                default:
+                    exception = new InvalidOperationException(string.Format(Resources.UnableToActivateType, implementationContract.ContractType));
+                    break;
+            }
+
             return false;
         }
 
-        private static bool TryResolveConstructorDependencies(ConstructorInfo constructor, DependencyAccessor definitionAccessor, out IEnumerable<CompositionDependency> dependencies)
+        private static bool TryResolveConstructorDependencies(ConstructorInfo constructor, DependencyAccessor definitionAccessor, out IEnumerable<CompositionDependency> dependencies, out Type failedParameterType)
         {
             var parameters = constructor.GetParameters();
             var dependencyArray = new CompositionDependency[parameters.Length];
@@ -128,7 +147,8 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
             for (int i = 0; i < parameters.Length; i++)
             {
                 CompositionDependency dependency;
-                var parameterContract = new CompositionContract(parameters[i].ParameterType);
+                var parameterType = parameters[i].ParameterType;
+                var parameterContract = new CompositionContract(parameterType);
 
                 if (definitionAccessor.TryResolveOptionalDependency("parameter", parameterContract, true, out dependency))
                 {
@@ -137,11 +157,13 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
                 else
                 {
                     dependencies = null;
+                    failedParameterType = parameterType;
                     return false;
                 }
             }
 
             dependencies = dependencyArray;
+            failedParameterType = null;
             return true;
         }
     }

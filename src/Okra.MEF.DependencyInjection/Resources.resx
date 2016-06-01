@@ -117,11 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CannotResolveService" xml:space="preserve">
+    <value>Unable to resolve service for type '{0}' while attempting to activate '{1}'.</value>
+    <comment>{0} = service which cannot be resolved, {1} = service being activated</comment>
+  </data>
   <data name="NoConstructorMatch" xml:space="preserve">
     <value>A suitable constructor for type '{0}' could not be located. Ensure the type is concrete and services are registered for all parameters of a public constructor.</value>
     <comment>{0} = service type</comment>
   </data>
   <data name="TypeCannotBeActivated" xml:space="preserve">
     <value>Cannot instantiate implementation type '{0}' for service type '{1}'.</value>
+  </data>
+  <data name="UnableToActivateType" xml:space="preserve">
+    <value>No constructor for type '{0}' can be instantiated using services from the service container and default values.</value>
   </data>
 </root>

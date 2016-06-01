@@ -60,6 +60,15 @@ namespace Okra.MEF.DependencyInjection {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Unable to resolve service for type &apos;{0}&apos; while attempting to activate &apos;{1}&apos;..
+        /// </summary>
+        public static string CannotResolveService {
+            get {
+                return ResourceManager.GetString("CannotResolveService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to A suitable constructor for type &apos;{0}&apos; could not be located. Ensure the type is concrete and services are registered for all parameters of a public constructor..
         /// </summary>
         public static string NoConstructorMatch {
@@ -74,6 +83,15 @@ namespace Okra.MEF.DependencyInjection {
         public static string TypeCannotBeActivated {
             get {
                 return ResourceManager.GetString("TypeCannotBeActivated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to No constructor for type &apos;{0}&apos; can be instantiated using services from the service container and default values..
+        /// </summary>
+        public static string UnableToActivateType {
+            get {
+                return ResourceManager.GetString("UnableToActivateType", resourceCulture);
             }
         }
     }
