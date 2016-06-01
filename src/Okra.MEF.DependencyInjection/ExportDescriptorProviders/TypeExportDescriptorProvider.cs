@@ -47,9 +47,21 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
 
         public static ExportDescriptorPromise GetTypedDescriptor<TElement>(CompositionContract contract, CompositionContract implementationContract, ServiceLifetime lifetime, DependencyAccessor definitionAccessor)
         {
-            var longestConstructor = GetLongestComposableConstructor(implementationContract, definitionAccessor);
-            var constructor = longestConstructor.Item1;
-            var dependencies = longestConstructor.Item2;
+            ConstructorInfo constructor;
+            IEnumerable<CompositionDependency> dependencies;
+
+            if (!TryGetLongestComposableConstructor(implementationContract, definitionAccessor, out constructor, out dependencies))
+            {
+                return new ExportDescriptorPromise(contract, typeof(TElement).Name, false, NoDependencies, ds =>
+                    {
+                        CompositeActivator activator = (c, o) =>
+                        {
+                            throw new InvalidOperationException(string.Format(Resources.NoConstructorMatch, implementationContract.ContractType));
+                        };
+
+                        return ExportDescriptor.Create(activator, NoMetadata);
+                    });
+            }
 
             return new ExportDescriptorPromise(
                  contract,
@@ -85,21 +97,27 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
                  });
         }
 
-        private static Tuple<ConstructorInfo, IEnumerable<CompositionDependency>> GetLongestComposableConstructor(CompositionContract implementationContract, DependencyAccessor definitionAccessor)
+        private static bool TryGetLongestComposableConstructor(CompositionContract implementationContract, DependencyAccessor definitionAccessor, out ConstructorInfo constructor, out IEnumerable<CompositionDependency> dependencies)
         {
-            var constructors = implementationContract.ContractType.GetTypeInfo().DeclaredConstructors
+            var availableConstructors = implementationContract.ContractType.GetTypeInfo().DeclaredConstructors
                                 .Where(c => c.IsPublic)
                                 .OrderByDescending(c => c.GetParameters().Length);
 
-            foreach (var constructor in constructors)
+            foreach (var availableConstructor in availableConstructors)
             {
                 IEnumerable<CompositionDependency> constructorDependencies;
 
-                if (TryResolveConstructorDependencies(constructor, definitionAccessor, out constructorDependencies))
-                    return Tuple.Create(constructor, constructorDependencies);
+                if (TryResolveConstructorDependencies(availableConstructor, definitionAccessor, out constructorDependencies))
+                {
+                    constructor = availableConstructor;
+                    dependencies = constructorDependencies;
+                    return true;
+                }
             }
 
-            throw new InvalidOperationException(string.Format(Resources.NoConstructorMatch, implementationContract.ContractType));
+            constructor = null;
+            dependencies = null;
+            return false;
         }
 
         private static bool TryResolveConstructorDependencies(ConstructorInfo constructor, DependencyAccessor definitionAccessor, out IEnumerable<CompositionDependency> dependencies)
