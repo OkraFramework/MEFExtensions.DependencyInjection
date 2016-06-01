@@ -37,7 +37,7 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
                 }
                 else
                 {
-                    // Otherwise return just the last element (TODO : prioritising closed generics over open generics)
+                    // Otherwise return just the last element
 
                     return new ExportDescriptorPromise[] { exportDescriptors.Last() };
                 }

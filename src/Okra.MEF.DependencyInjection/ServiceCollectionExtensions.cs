@@ -29,6 +29,7 @@ namespace Okra.MEF.DependencyInjection
         private static CompositionContext CreateContainer(IEnumerable<ServiceDescriptor> serviceDescriptors)
         {
             List<ExportDescriptorProvider> exportDescriptorProviders = new List<ExportDescriptorProvider>();
+            List<ServiceDescriptor> openGenericServiceDescriptors = new List<ServiceDescriptor>();
             
             foreach (var descriptor in serviceDescriptors)
             {
@@ -37,7 +38,12 @@ namespace Okra.MEF.DependencyInjection
                 else if (descriptor.ImplementationFactory != null)
                     exportDescriptorProviders.Add(new FactoryExportDescriptorProvider(descriptor));
                 else if (descriptor.ImplementationType != null)
-                    exportDescriptorProviders.Add(new TypeExportDescriptorProvider(descriptor));
+                {
+                    if (descriptor.ServiceType.GetTypeInfo().IsGenericTypeDefinition)
+                        openGenericServiceDescriptors.Add(descriptor);
+                    else
+                        exportDescriptorProviders.Add(new TypeExportDescriptorProvider(descriptor));
+                }
                 else
                     throw new NotImplementedException();
             }
@@ -47,7 +53,10 @@ namespace Okra.MEF.DependencyInjection
             containerConfiguration.WithPart<MefServiceProvider>();
             containerConfiguration.WithPart<MefServiceScopeFactory>();
 
-            containerConfiguration.WithProvider(new AggregateExportDescriptorProvider(exportDescriptorProviders));
+            // NB: Always include open generic services before closed generic services so the latter is always preferred
+            var openGenericExportDescriptorProviders = new[] { new OpenGenericExportDescriptorProvider(openGenericServiceDescriptors) };
+            var allProviders = Enumerable.Concat(openGenericExportDescriptorProviders, exportDescriptorProviders);
+            containerConfiguration.WithProvider(new AggregateExportDescriptorProvider(allProviders));
 
             return containerConfiguration.CreateContainer();
         }

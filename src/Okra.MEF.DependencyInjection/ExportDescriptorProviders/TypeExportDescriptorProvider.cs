@@ -13,7 +13,6 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
     public class TypeExportDescriptorProvider : ExportDescriptorProvider
     {
         private ServiceDescriptor _serviceDescriptor;
-        private bool _isOpenGenericService;
 
         private static readonly MethodInfo s_getTypedDescriptorMethod = typeof(TypeExportDescriptorProvider).GetTypeInfo().GetDeclaredMethod(nameof(GetTypedDescriptor));
 
@@ -24,33 +23,20 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
 
             if (implementationType.IsAbstract ||
                 implementationType.IsInterface ||
-                (implementationType.IsGenericTypeDefinition && !serviceType.IsGenericTypeDefinition))
+                implementationType.IsGenericTypeDefinition)
             {
                 throw new ArgumentException(string.Format(Resources.TypeCannotBeActivated, serviceDescriptor.ImplementationType, serviceDescriptor.ServiceType));
             }
 
             this._serviceDescriptor = serviceDescriptor;
-            this._isOpenGenericService = serviceType.IsGenericTypeDefinition;
         }
 
         public override IEnumerable<ExportDescriptorPromise> GetExportDescriptors(CompositionContract contract, DependencyAccessor descriptorAccessor)
         {
-            Type implementationType;
-
-            if (!_isOpenGenericService && contract.ContractType == _serviceDescriptor.ServiceType)
-            {
-                implementationType = _serviceDescriptor.ImplementationType;
-            }
-            else if (_isOpenGenericService && contract.ContractType.GetTypeInfo().IsGenericType && contract.ContractType.GetGenericTypeDefinition() == _serviceDescriptor.ServiceType)
-            {
-                var genericArguments = contract.ContractType.GetTypeInfo().GenericTypeArguments;
-                implementationType = _serviceDescriptor.ImplementationType.MakeGenericType(genericArguments);
-            }
-            else
-            {
+            if (contract.ContractType != _serviceDescriptor.ServiceType)
                 return NoExportDescriptors;
-            }
 
+            Type implementationType = _serviceDescriptor.ImplementationType;
             var implementationContract = contract.ChangeType(implementationType);
 
             var getDescriptorMethod = s_getTypedDescriptorMethod.MakeGenericMethod(contract.ContractType);
@@ -59,7 +45,7 @@ namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
             return new[] { (ExportDescriptorPromise)getDescriptorDelegate(contract, implementationContract, _serviceDescriptor.Lifetime, descriptorAccessor) };
         }
 
-        private static ExportDescriptorPromise GetTypedDescriptor<TElement>(CompositionContract contract, CompositionContract implementationContract, ServiceLifetime lifetime, DependencyAccessor definitionAccessor)
+        public static ExportDescriptorPromise GetTypedDescriptor<TElement>(CompositionContract contract, CompositionContract implementationContract, ServiceLifetime lifetime, DependencyAccessor definitionAccessor)
         {
             var longestConstructor = GetLongestComposableConstructor(implementationContract, definitionAccessor);
             var constructor = longestConstructor.Item1;
