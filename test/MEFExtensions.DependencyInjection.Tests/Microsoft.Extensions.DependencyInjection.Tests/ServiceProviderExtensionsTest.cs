@@ -7,7 +7,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Testing;
 using Xunit;
 
-using Okra.MEF.DependencyInjection;
+using MEFExtensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

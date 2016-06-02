@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Okra.MEF.DependencyInjection.ExportDescriptorProviders;
+using MEFExtensions.DependencyInjection.ExportDescriptorProviders;
 using System;
 using System.Collections.Generic;
 using System.Composition;
@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Okra.MEF.DependencyInjection
+namespace MEFExtensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {

@@ -4,7 +4,7 @@
   "packOptions": { 
     "repository": { 
       "type": "git", 
-      "url": "git://github.com/OkraFramework/Okra.MEF.DependencyInjection" 
+      "url": "git://github.com/OkraFramework/MEFExtensions.DependencyInjection" 
     }, 
     "tags": [ "DependencyInjection", "DI" ] 
    },

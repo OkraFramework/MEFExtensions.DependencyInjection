@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection.Specification.Fakes;
 using Xunit;
 
-using Okra.MEF.DependencyInjection;
+using MEFExtensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

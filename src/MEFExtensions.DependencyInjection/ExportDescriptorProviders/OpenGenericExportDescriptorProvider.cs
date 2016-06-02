@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Okra.MEF.Util;
+using MEFExtensions.DependencyInjection.Util;
 using System;
 using System.Collections.Generic;
 using System.Composition.Hosting.Core;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
+namespace MEFExtensions.DependencyInjection.ExportDescriptorProviders
 {
     public class OpenGenericExportDescriptorProvider : ExportDescriptorProvider
     {

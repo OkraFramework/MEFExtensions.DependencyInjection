@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Andrew Wilkinson")]
-[assembly: AssemblyProduct("Okra.MEF.DependencyInjection")]
+[assembly: AssemblyProduct("MEFExtensions.DependencyInjection")]
 [assembly: AssemblyTrademark("Copyright \u00A9 Andrew Wilkinson 2016")]
 [assembly: NeutralResourcesLanguage("en-us")]
 

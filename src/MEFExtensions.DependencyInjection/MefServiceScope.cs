@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Composition;
 
-namespace Okra.MEF.DependencyInjection
+namespace MEFExtensions.DependencyInjection
 {
     internal class MefServiceScope : IServiceScope
     {

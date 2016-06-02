@@ -6,9 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Okra.MEF.Util;
+using MEFExtensions.DependencyInjection.Util;
 
-namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
+namespace MEFExtensions.DependencyInjection.ExportDescriptorProviders
 {
     public class TypeExportDescriptorProvider : ExportDescriptorProvider
     {

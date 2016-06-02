@@ -1,2 +1,2 @@
-# Okra.MEF.DependencyInjection
+# MEFExtensions.DependencyInjection
 Dependency Injection adapter to allow the use of MEF containers in .Net Core applications

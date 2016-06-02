@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Okra.MEF.Util
+namespace MEFExtensions.DependencyInjection.Util
 {
     internal static class MethodInfoExtensions
     {

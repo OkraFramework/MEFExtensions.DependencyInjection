@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Okra.MEF.Util;
+using MEFExtensions.DependencyInjection.Util;
 using System;
 using System.Collections.Generic;
 using System.Composition.Hosting.Core;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Okra.MEF.DependencyInjection.ExportDescriptorProviders
+namespace MEFExtensions.DependencyInjection.ExportDescriptorProviders
 {
     // Based upon https://mef.codeplex.com/SourceControl/latest#oob/demo/Microsoft.Composition.Demos.ExtendedPartTypes/Extension/DelegateExportDescriptorProvider.cs
 

@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection.Specification.Fakes;
 using Microsoft.Extensions.DependencyInjection.Tests.Fakes;
 using Xunit;
 
-using Okra.MEF.DependencyInjection;
+using MEFExtensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection.Tests
 {

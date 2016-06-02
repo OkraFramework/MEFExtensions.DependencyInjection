@@ -9,7 +9,7 @@ using System.Composition.Convention;
 using Microsoft.Extensions.DependencyInjection;
 using System.Composition;
 
-namespace Okra.MEF.DependencyInjection
+namespace MEFExtensions.DependencyInjection
 {
     [Export(typeof(IServiceProvider))]
     internal class MefServiceProvider : IServiceProvider

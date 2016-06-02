@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Okra.MEF.DependencyInjection
+namespace MEFExtensions.DependencyInjection
 {
     /// <summary>
     /// Default implementation of <see cref="IServiceCollection"/>.
