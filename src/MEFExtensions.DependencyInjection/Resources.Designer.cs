@@ -94,5 +94,14 @@ namespace MEFExtensions.DependencyInjection {
                 return ResourceManager.GetString("UnableToActivateType", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///    Looks up a localized string similar to You can only add native MEF exports to an instance of MEFExtensions.DependencyInjection.ServiceCollection..
+        /// </summary>
+        public static string CannotAddNativeMefImports {
+            get {
+                return ResourceManager.GetString("CannotAddNativeMefImports", resourceCulture);
+            }
+        }
     }
 }

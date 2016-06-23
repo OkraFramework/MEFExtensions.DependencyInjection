@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace MEFExtensions.DependencyInjection
 {
-    public static class ServiceCollectionExtensions
+    public static partial class ServiceCollectionExtensions
     {
         public static IServiceProvider BuildServiceProvider(this IServiceCollection services)
         {
@@ -57,6 +57,14 @@ namespace MEFExtensions.DependencyInjection
             var openGenericExportDescriptorProviders = new[] { new OpenGenericExportDescriptorProvider(openGenericServiceDescriptors) };
             var allProviders = Enumerable.Concat(openGenericExportDescriptorProviders, exportDescriptorProviders);
             containerConfiguration.WithProvider(new AggregateExportDescriptorProvider(allProviders));
+
+            if (serviceDescriptors is IMefServiceCollection)
+            {
+                foreach (var mefServiceDescriptor in ((IMefServiceCollection)serviceDescriptors).MefServiceDescriptors)
+                {
+                    mefServiceDescriptor(containerConfiguration);
+                }
+            }
 
             return containerConfiguration.CreateContainer();
         }
