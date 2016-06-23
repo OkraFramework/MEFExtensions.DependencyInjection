@@ -131,4 +131,7 @@
   <data name="UnableToActivateType" xml:space="preserve">
     <value>No constructor for type '{0}' can be instantiated using services from the service container and default values.</value>
   </data>
+  <data name="CannotAddNativeMefImports" xml:space="preserve">
+    <value>You can only add native MEF exports to an instance of MEFExtensions.DependencyInjection.ServiceCollection.</value>
+  </data>
 </root>

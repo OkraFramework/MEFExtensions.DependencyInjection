@@ -5,15 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Composition.Hosting;
 
 namespace MEFExtensions.DependencyInjection
 {
     /// <summary>
     /// Default implementation of <see cref="IServiceCollection"/>.
     /// </summary>
-    public class ServiceCollection : IServiceCollection
+    public class ServiceCollection : IMefServiceCollection
     {
         private readonly List<ServiceDescriptor> _descriptors = new List<ServiceDescriptor>();
+        private readonly List<Action<ContainerConfiguration>> _mefDescriptors = new List<Action<ContainerConfiguration>>();
 
         /// <inheritdoc />
         public int Count => _descriptors.Count;
@@ -30,6 +32,14 @@ namespace MEFExtensions.DependencyInjection
             set
             {
                 _descriptors[index] = value;
+            }
+        }
+
+        IList<Action<ContainerConfiguration>> IMefServiceCollection.MefServiceDescriptors
+        {
+            get
+            {
+                return _mefDescriptors;
             }
         }
 
@@ -66,6 +76,11 @@ namespace MEFExtensions.DependencyInjection
         void ICollection<ServiceDescriptor>.Add(ServiceDescriptor item)
         {
             _descriptors.Add(item);
+        }
+
+        void IMefServiceCollection.Add(Action<ContainerConfiguration> item)
+        {
+            _mefDescriptors.Add(item);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
