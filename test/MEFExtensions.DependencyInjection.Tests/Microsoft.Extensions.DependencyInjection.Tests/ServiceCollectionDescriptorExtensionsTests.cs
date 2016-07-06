@@ -9,7 +9,7 @@ using MEFExtensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public class ServiceCollectionTests
+    public class ServiceCollectionDescriptorExtensionsTest
     {
         [Fact]
         public void Add_AddsDescriptorToServiceDescriptors()
