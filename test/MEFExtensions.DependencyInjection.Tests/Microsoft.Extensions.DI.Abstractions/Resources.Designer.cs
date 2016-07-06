@@ -8,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection.Abstractions
     internal static class Resources
     {
         private static readonly ResourceManager _resourceManager
-            = new ResourceManager("MEFExtensions.DependencyInjection.Tests.Microsoft.Extensions.DependencyInjection.Abstractions.Resources", typeof(Resources).GetTypeInfo().Assembly);
+            = new ResourceManager("MEFExtensions.DependencyInjection.Tests.Microsoft.Extensions.DI.Abstractions.Resources", typeof(Resources).GetTypeInfo().Assembly);
 
         /// <summary>
         /// Multiple constructors accepting all given argument types have been found in type '{0}'. There should only be one applicable constructor.
