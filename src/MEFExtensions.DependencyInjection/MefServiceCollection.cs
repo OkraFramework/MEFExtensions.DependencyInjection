@@ -14,8 +14,18 @@ namespace MEFExtensions.DependencyInjection
     /// </summary>
     public class MefServiceCollection : IMefServiceCollection
     {
-        private readonly List<ServiceDescriptor> _descriptors = new List<ServiceDescriptor>();
+        private readonly List<ServiceDescriptor> _descriptors;
         private readonly List<Action<ContainerConfiguration>> _mefDescriptors = new List<Action<ContainerConfiguration>>();
+
+        public MefServiceCollection()
+        {
+            this._descriptors = new List<ServiceDescriptor>();
+        }
+
+        public MefServiceCollection(IEnumerable<ServiceDescriptor> services)
+        {
+            this._descriptors = new List<ServiceDescriptor>(services);
+        }
 
         /// <inheritdoc />
         public int Count => _descriptors.Count;
@@ -35,7 +45,7 @@ namespace MEFExtensions.DependencyInjection
             }
         }
 
-        IList<Action<ContainerConfiguration>> IMefServiceCollection.MefServiceDescriptors
+        public IList<Action<ContainerConfiguration>> MefServiceDescriptors
         {
             get
             {
