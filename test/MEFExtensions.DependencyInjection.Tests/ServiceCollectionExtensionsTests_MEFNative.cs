@@ -1,7 +1,6 @@
 using Xunit;
 
 using Microsoft.Extensions.DependencyInjection;
-using MEFExtensions.DependencyInjection;
 using MEFExtensions.DependencyInjection.Tests.TestExports;
 using MEFExtensions.DependencyInjection.Tests.Mocks;
 using System;

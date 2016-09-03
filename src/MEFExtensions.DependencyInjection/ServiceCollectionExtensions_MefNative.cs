@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Composition.Convention;
 using System.Composition.Hosting.Core;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MEFExtensions.DependencyInjection
 {

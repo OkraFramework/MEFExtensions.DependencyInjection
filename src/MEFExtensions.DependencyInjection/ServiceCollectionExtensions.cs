@@ -3,13 +3,10 @@ using MEFExtensions.DependencyInjection.ExportDescriptorProviders;
 using System;
 using System.Collections.Generic;
 using System.Composition;
-using System.Composition.Convention;
 using System.Composition.Hosting;
 using System.Composition.Hosting.Core;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MEFExtensions.DependencyInjection
 {

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Composition.Hosting.Core;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using MEFExtensions.DependencyInjection.Util;
 
 namespace MEFExtensions.DependencyInjection.ExportDescriptorProviders

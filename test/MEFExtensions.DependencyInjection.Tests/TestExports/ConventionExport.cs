@@ -1,5 +1,4 @@
 using System.Composition;
-using Xunit;
 
 namespace MEFExtensions.DependencyInjection.Tests.TestExports
 {
