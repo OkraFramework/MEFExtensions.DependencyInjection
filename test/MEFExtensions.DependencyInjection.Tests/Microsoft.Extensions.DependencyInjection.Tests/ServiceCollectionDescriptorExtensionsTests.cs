@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection.Specification.Fakes;
 using Xunit;
 
 using MEFExtensions.DependencyInjection;
+using ServiceCollection = MEFExtensions.DependencyInjection.MefServiceCollection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MEFExtensions.DependencyInjection
 {
-    internal interface IMefServiceCollection : IServiceCollection
+    public interface IMefServiceCollection : IServiceCollection
     {
         IList<Action<ContainerConfiguration>> MefServiceDescriptors { get; }
         void Add(Action<ContainerConfiguration> item);

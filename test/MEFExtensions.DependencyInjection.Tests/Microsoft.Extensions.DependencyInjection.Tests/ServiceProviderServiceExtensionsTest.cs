@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Testing;
 using Xunit;
 
 using MEFExtensions.DependencyInjection;
+using ServiceCollection = MEFExtensions.DependencyInjection.MefServiceCollection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

@@ -10,6 +10,7 @@ using Xunit;
 using AbstractionResources = Microsoft.Extensions.DependencyInjection.Abstractions.Resources;
 
 using MEFExtensions.DependencyInjection;
+using ServiceCollection = MEFExtensions.DependencyInjection.MefServiceCollection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

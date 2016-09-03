@@ -17,7 +17,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithProvider_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             var exportDescriptorProvider = new MockExportDescriptorProvider();
             serviceCollection.WithProvider(exportDescriptorProvider);
@@ -32,7 +32,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithProvider_ThrowsExceptionWithNullProvider()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             Assert.Throws<ArgumentNullException>("exportDescriptorProvider", () => serviceCollection.WithProvider(null));
         }
@@ -40,7 +40,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithDefaultConventions_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             var conventionBuilder = new ConventionBuilder();
             conventionBuilder.ForTypesMatching(type => type == typeof(ConventionExport))
@@ -63,7 +63,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithDefaultConventions_ThrowsExceptionWithNullConventions()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             Assert.Throws<ArgumentNullException>("conventions", () => serviceCollection.WithDefaultConventions(null));
         }
@@ -71,7 +71,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithPart_ByType_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             serviceCollection.WithPart(typeof(SimpleService));
             serviceCollection.WithPart(typeof(SimpleExport));
@@ -88,7 +88,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithPart_ByType_ThrowsExceptionWithNullPartType()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             Assert.Throws<ArgumentNullException>("partType", () => serviceCollection.WithPart(null));
         }
@@ -96,7 +96,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithPart_ByTypeAndConventions_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             var conventionBuilder = new ConventionBuilder();
             conventionBuilder.ForTypesMatching(type => type == typeof(ConventionExport))
@@ -118,7 +118,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithPart_ByTypeAndConventions_ThrowsExceptionWithNullPartType()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
             var conventionBuilder = new ConventionBuilder();
 
             Assert.Throws<ArgumentNullException>("partType", () => serviceCollection.WithPart(null, conventionBuilder));
@@ -127,7 +127,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithPart_ByGenericType_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             serviceCollection.WithPart<SimpleService>();
             serviceCollection.WithPart<SimpleExport>();
@@ -144,7 +144,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithPart_ByGenericTypeAndConventions_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             var conventionBuilder = new ConventionBuilder();
             conventionBuilder.ForTypesMatching(type => type == typeof(ConventionExport))
@@ -166,7 +166,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithParts_ByParamsArray_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             serviceCollection.WithParts(typeof(SimpleService), typeof(SimpleExport));
 
@@ -182,7 +182,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithParts_ByParamsArray_ThrowsExceptionWithNullPartTypes()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             Assert.Throws<ArgumentNullException>("partTypes", () => serviceCollection.WithParts((Type[])null));
         }
@@ -190,7 +190,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithParts_ByEnumerable_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             IEnumerable<Type> parts = new Type[] {typeof(SimpleService), typeof(SimpleExport)};
             serviceCollection.WithParts(parts);
@@ -207,7 +207,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithParts_ByEnumerable_ThrowsExceptionWithNullPartTypes()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             Assert.Throws<ArgumentNullException>("partTypes", () => serviceCollection.WithParts((IEnumerable<Type>)null));
         }
@@ -215,7 +215,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithParts_ByEnumerableAndConventions_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             var conventionBuilder = new ConventionBuilder();
             conventionBuilder.ForTypesMatching(type => type == typeof(ConventionExport))
@@ -237,7 +237,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithParts_ByEnumerableAndConventions_ThrowsExceptionWithNullPartTypes()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
             var conventionBuilder = new ConventionBuilder();
 
             Assert.Throws<ArgumentNullException>("partTypes", () => serviceCollection.WithParts((IEnumerable<Type>)null, conventionBuilder));
@@ -246,7 +246,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithAssembly_ByAssembly_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             var assembly = typeof(SimpleService).GetTypeInfo().Assembly;
             serviceCollection.WithAssembly(assembly);
@@ -263,7 +263,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithAssembly_ByAssembly_ThrowsExceptionWithNullPartTypes()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             Assert.Throws<ArgumentNullException>("assembly", () => serviceCollection.WithAssembly(null));
         }
@@ -271,7 +271,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithAssembly_ByAssemblyAndConventions_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             var conventionBuilder = new ConventionBuilder();
             conventionBuilder.ForTypesMatching(type => type == typeof(ConventionExport))
@@ -293,7 +293,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithAssembly_ByAssemblyAndConventions_ThrowsExceptionWithNullPartTypes()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
             var conventionBuilder = new ConventionBuilder();
 
             Assert.Throws<ArgumentNullException>("assembly", () => serviceCollection.WithAssembly(null, conventionBuilder));
@@ -302,7 +302,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithAssemblies_ByAssembly_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             var assemblies = new[] { typeof(SimpleService).GetTypeInfo().Assembly };
             serviceCollection.WithAssemblies(assemblies);
@@ -319,7 +319,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithAssemblies_ByAssembly_ThrowsExceptionWithNullPartTypes()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             Assert.Throws<ArgumentNullException>("assemblies", () => serviceCollection.WithAssemblies(null));
         }
@@ -327,7 +327,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithAssemblies_ByAssemblyAndConventions_AddsPartToContainer()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             var conventionBuilder = new ConventionBuilder();
             conventionBuilder.ForTypesMatching(type => type == typeof(ConventionExport))
@@ -349,7 +349,7 @@ namespace MEFExtensions.DependencyInjection.Tests
         [Fact]
         public void WithAssemblies_ByAssemblyAndConventions_ThrowsExceptionWithNullPartTypes()
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
             var conventionBuilder = new ConventionBuilder();
 
             Assert.Throws<ArgumentNullException>("assemblies", () => serviceCollection.WithAssemblies(null, conventionBuilder));
@@ -448,120 +448,15 @@ namespace MEFExtensions.DependencyInjection.Tests
             Assert_ReturnsSameServiceCollection(serviceCollection => serviceCollection.WithAssemblies(assemblies, conventionBuilder));
         }
 
-        // *** ThrowsExceptionIfNotMefServiceCollection Tests ***
-
-        [Fact]
-        public void WithProvider_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            var exportDescriptorProvider = new MockExportDescriptorProvider();
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithProvider(exportDescriptorProvider));
-        }
-
-        [Fact]
-        public void WithDefaultConventions_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            var conventionBuilder = new ConventionBuilder();
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithDefaultConventions(conventionBuilder));
-        }
-
-        [Fact]
-        public void WithPart_ByType_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithPart(typeof(SimpleExport)));
-        }
-
-        [Fact]
-        public void WithPart_ByTypeAndConventions_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            var conventionBuilder = new ConventionBuilder();
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithPart(typeof(SimpleExport), conventionBuilder));
-        }
-
-        [Fact]
-        public void WithPart_ByGenericType_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithPart<SimpleExport>());
-        }
-
-        [Fact]
-        public void WithPart_ByGenericTypeAndConventions_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            var conventionBuilder = new ConventionBuilder();
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithPart<SimpleExport>(conventionBuilder));
-        }
-
-        [Fact]
-        public void WithParts_ByParamsArray_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithParts(typeof(SimpleService), typeof(SimpleExport)));
-        }
-
-        [Fact]
-        public void WithParts_ByEnumerable_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            IEnumerable<Type> parts = new Type[] {typeof(SimpleService), typeof(SimpleExport)};
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithParts(parts));
-        }
-
-        [Fact]
-        public void WithParts_ByEnumerableAndConventions_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            var conventionBuilder = new ConventionBuilder();
-            IEnumerable<Type> parts = new Type[] {typeof(SimpleService), typeof(SimpleExport)};
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithParts(parts, conventionBuilder));
-        }
-
-        [Fact]
-        public void WithAssembly_ByAssembly_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            var assembly = typeof(SimpleService).GetTypeInfo().Assembly;
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithAssembly(assembly));
-        }
-
-        [Fact]
-        public void WithAssembly_ByAssemblyAndConventions_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            var conventionBuilder = new ConventionBuilder();
-            var assembly = typeof(SimpleService).GetTypeInfo().Assembly;
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithAssembly(assembly, conventionBuilder));
-        }
-
-        [Fact]
-        public void WithAssemblies_ByAssembly_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            var assemblies = new[] { typeof(SimpleService).GetTypeInfo().Assembly };
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithAssemblies(assemblies));
-        }
-
-        [Fact]
-        public void WithAssemblies_ByAssemblyAndConventions_ThrowsExceptionIfNotMefServiceCollection()
-        {
-            var conventionBuilder = new ConventionBuilder();
-            var assemblies = new[] { typeof(SimpleService).GetTypeInfo().Assembly };
-            Assert_NotMefServiceException(serviceCollection => serviceCollection.WithAssemblies(assemblies, conventionBuilder));
-        }
-
         // *** Private Methods ***
 
-        private void Assert_ReturnsSameServiceCollection(Func<IServiceCollection, IServiceCollection> testCode)
+        private void Assert_ReturnsSameServiceCollection(Func<IMefServiceCollection, IMefServiceCollection> testCode)
         {
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new MefServiceCollection();
 
             var result = testCode(serviceCollection);
 
             Assert.Equal(serviceCollection, result);
-        }
-
-        private void Assert_NotMefServiceException(Func<IServiceCollection, object> testCode)
-        {
-            var serviceCollection = new MockServiceCollection();
-
-            Assert.Throws<ArgumentNullException>("services", () => testCode(null));
-
-            var e = Assert.Throws<ArgumentException>(() => testCode(serviceCollection));
-
-            Assert.Equal("services", e.ParamName);
-            Assert.Equal("You can only add native MEF exports to an instance of MEFExtensions.DependencyInjection.ServiceCollection.\r\nParameter name: services", e.Message);
         }
     }
 }

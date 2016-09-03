@@ -9,7 +9,7 @@ namespace MEFExtensions.DependencyInjection
 {
     public static partial class ServiceCollectionExtensions
     {
-        public static IServiceCollection WithProvider(this IServiceCollection services, ExportDescriptorProvider exportDescriptorProvider)
+        public static IMefServiceCollection WithProvider(this IMefServiceCollection services, ExportDescriptorProvider exportDescriptorProvider)
         {
             if (services ==null)
                 throw new ArgumentNullException(nameof(services));
@@ -17,14 +17,11 @@ namespace MEFExtensions.DependencyInjection
             if (exportDescriptorProvider == null)
                 throw new ArgumentNullException(nameof(exportDescriptorProvider));
 
-            if (!(services is IMefServiceCollection))
-                throw new ArgumentException(Resources.CannotAddNativeMefImports, nameof(services));
-
-            ((IMefServiceCollection)services).Add(c => c.WithProvider(exportDescriptorProvider));
+            services.Add(c => c.WithProvider(exportDescriptorProvider));
             return services;
         }
 
-        public static IServiceCollection WithDefaultConventions(this IServiceCollection services, AttributedModelProvider conventions)
+        public static IMefServiceCollection WithDefaultConventions(this IMefServiceCollection services, AttributedModelProvider conventions)
         {
             if (services ==null)
                 throw new ArgumentNullException(nameof(services));
@@ -32,54 +29,48 @@ namespace MEFExtensions.DependencyInjection
             if (conventions == null)
                 throw new ArgumentNullException(nameof(conventions));
 
-            if (!(services is IMefServiceCollection))
-                throw new ArgumentException(Resources.CannotAddNativeMefImports, nameof(services));
-
-            ((IMefServiceCollection)services).Add(c => c.WithDefaultConventions(conventions));
+            services.Add(c => c.WithDefaultConventions(conventions));
             return services;
         }
 
-        public static IServiceCollection WithPart(this IServiceCollection services, Type partType)
+        public static IMefServiceCollection WithPart(this IMefServiceCollection services, Type partType)
         {
             return WithPart(services, partType, null);
         }
 
-        public static IServiceCollection WithPart(this IServiceCollection services, Type partType, AttributedModelProvider conventions)
+        public static IMefServiceCollection WithPart(this IMefServiceCollection services, Type partType, AttributedModelProvider conventions)
         {
             if (services ==null)
                 throw new ArgumentNullException(nameof(services));
             
             if (partType == null)
                 throw new ArgumentNullException(nameof(partType));
-            
-            if (!(services is IMefServiceCollection))
-                throw new ArgumentException(Resources.CannotAddNativeMefImports, nameof(services));
 
-            ((IMefServiceCollection)services).Add(c => c.WithPart(partType, conventions));
+            services.Add(c => c.WithPart(partType, conventions));
             return services;
         }
 
-        public static IServiceCollection WithPart<TPart>(this IServiceCollection services)
+        public static IMefServiceCollection WithPart<TPart>(this IMefServiceCollection services)
         {
             return WithPart<TPart>(services, null);
         }
 
-        public static IServiceCollection WithPart<TPart>(this IServiceCollection services, AttributedModelProvider conventions)
+        public static IMefServiceCollection WithPart<TPart>(this IMefServiceCollection services, AttributedModelProvider conventions)
         {
             return WithPart(services, typeof(TPart), conventions);
         }
 
-        public static IServiceCollection WithParts(this IServiceCollection services, params Type[] partTypes)
+        public static IMefServiceCollection WithParts(this IMefServiceCollection services, params Type[] partTypes)
         {
             return WithParts(services, (IEnumerable<Type>)partTypes);
         }
 
-        public static IServiceCollection WithParts(this IServiceCollection services, IEnumerable<Type> partTypes)
+        public static IMefServiceCollection WithParts(this IMefServiceCollection services, IEnumerable<Type> partTypes)
         {
             return WithParts(services, partTypes, null);
         }
 
-        public static IServiceCollection WithParts(this IServiceCollection services, IEnumerable<Type> partTypes, AttributedModelProvider conventions)
+        public static IMefServiceCollection WithParts(this IMefServiceCollection services, IEnumerable<Type> partTypes, AttributedModelProvider conventions)
         {
             if (services ==null)
                 throw new ArgumentNullException(nameof(services));
@@ -87,39 +78,33 @@ namespace MEFExtensions.DependencyInjection
             if (partTypes == null)
                 throw new ArgumentNullException(nameof(partTypes));
 
-            if (!(services is IMefServiceCollection))
-                throw new ArgumentException(Resources.CannotAddNativeMefImports, nameof(services));
-
-            ((IMefServiceCollection)services).Add(c => c.WithParts(partTypes, conventions));
+            services.Add(c => c.WithParts(partTypes, conventions));
             return services;
         }
 
-        public static IServiceCollection WithAssembly(this IServiceCollection services, Assembly assembly)
+        public static IMefServiceCollection WithAssembly(this IMefServiceCollection services, Assembly assembly)
         {            
             return WithAssembly(services, assembly, null);
         }
 
-        public static IServiceCollection WithAssembly(this IServiceCollection services, Assembly assembly, AttributedModelProvider conventions)
+        public static IMefServiceCollection WithAssembly(this IMefServiceCollection services, Assembly assembly, AttributedModelProvider conventions)
         {
             if (services ==null)
                 throw new ArgumentNullException(nameof(services));
             
             if (assembly == null)
                 throw new ArgumentNullException(nameof(assembly));
-
-            if (!(services is IMefServiceCollection))
-                throw new ArgumentException(Resources.CannotAddNativeMefImports, nameof(services));
             
-            ((IMefServiceCollection)services).Add(c => c.WithAssembly(assembly, conventions));
+            services.Add(c => c.WithAssembly(assembly, conventions));
             return services;
         }
 
-        public static IServiceCollection WithAssemblies(this IServiceCollection services, IEnumerable<Assembly> assemblies)
+        public static IMefServiceCollection WithAssemblies(this IMefServiceCollection services, IEnumerable<Assembly> assemblies)
         {
             return WithAssemblies(services, assemblies, null);
         }
 
-        public static IServiceCollection WithAssemblies(this IServiceCollection services, IEnumerable<Assembly> assemblies, AttributedModelProvider conventions)
+        public static IMefServiceCollection WithAssemblies(this IMefServiceCollection services, IEnumerable<Assembly> assemblies, AttributedModelProvider conventions)
         {
             if (services ==null)
                 throw new ArgumentNullException(nameof(services));
@@ -127,10 +112,7 @@ namespace MEFExtensions.DependencyInjection
             if (assemblies == null)
                 throw new ArgumentNullException(nameof(assemblies));
 
-            if (!(services is IMefServiceCollection))
-                throw new ArgumentException(Resources.CannotAddNativeMefImports, nameof(services));
-
-            ((IMefServiceCollection)services).Add(c => c.WithAssemblies(assemblies, conventions));
+            services.Add(c => c.WithAssemblies(assemblies, conventions));
             return services;
         }
     }

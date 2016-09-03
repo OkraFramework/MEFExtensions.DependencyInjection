@@ -12,7 +12,7 @@ namespace MEFExtensions.DependencyInjection
     /// <summary>
     /// Default implementation of <see cref="IServiceCollection"/>.
     /// </summary>
-    public class ServiceCollection : IMefServiceCollection
+    public class MefServiceCollection : IMefServiceCollection
     {
         private readonly List<ServiceDescriptor> _descriptors = new List<ServiceDescriptor>();
         private readonly List<Action<ContainerConfiguration>> _mefDescriptors = new List<Action<ContainerConfiguration>>();
